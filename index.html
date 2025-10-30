@@ -1,1 +1,428 @@
-Hello World 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Resume | Franky Castillo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    
+    <!-- Chosen Palette: Warm Neutral (Slate) with Blue Accent -->
+    <!-- Application Structure Plan: The SPA is designed as an interactive dashboard, not a linear document. The structure is: 1) Header (Contact/Identity), 2) Professional Profile (Summary), 3) Career Timeline (Chart.js Gantt-style chart for high-level visual summary), 4) Interactive Core Expertise (Clickable skill buttons), and 5) Filterable Professional Experience (Job cards that dynamically show/hide/highlight). This structure was chosen because a resume's primary user task is skill-to-experience mapping. The user flow is: Read Profile -> See Skills -> Click a Skill -> Instantly see relevant job history. This is far more efficient and engaging for a recruiter or hiring manager than manually scanning a static document. -->
+    <!-- Visualization & Content Choices: [Profile -> Goal: Inform -> Method: HTML Text]. [Career Timeline -> Goal: Change/Summarize -> Method: Chart.js Horizontal Bar (Gantt) Chart -> Interaction: Hover Tooltip -> Justification: Visualizes 20+ years of experience instantly]. [Core Expertise -> Goal: Organize/Interact -> Method: HTML/Tailwind Buttons -> Interaction: OnClick filters -> Justification: Primary interactive element, maps to user's mental model]. [Professional Experience -> Goal: Inform/Compare/Filter -> Method: HTML/Tailwind Cards with data-attributes -> Interaction: Dynamically shown/hidden/highlighted by JS -> Justification: This is the 'answer' to the user's 'question' (the skill click)]. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans leading-relaxed">
+
+    <main class="container mx-auto p-4 py-8 md:p-12">
+
+        <!-- Header -->
+        <header class="mb-12 text-center">
+            <h1 class="text-5xl md:text-6xl font-bold text-slate-900 mb-2">FRANKY CASTILLO</h1>
+            <h2 class="text-2xl md:text-3xl font-light text-blue-700 mb-4">Technical Project Lead / Lead Backend Developer</h2>
+            <div class="flex justify-center space-x-6 text-slate-600">
+                <span>Tampa Bay Area, USA</span>
+                <span>|</span>
+                <a href="mailto:frankycastillo@gmail.com" class="text-blue-600 hover:underline">frankycastillo@gmail.com</a>
+                <span>|</span>
+                <a href="https://www.linkedin.com/in/frankycastillo/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">LinkedIn Profile</a>
+            </div>
+        </header>
+
+        <!-- Profile Section -->
+        <section id="profile" class="bg-white p-6 md:p-8 rounded-lg shadow-md mb-8">
+            <h3 class="text-3xl font-semibold text-slate-900 mb-4">Professional Profile</h3>
+            <p class="text-lg text-slate-700">
+                Highly accomplished **Technical Project Lead** and **Lead Backend Developer** with 20+ years of experience in architecting and delivering complex, distributed systems. Expert in **Java (Spring/Spring Boot)**, **C# (.NET Core)**, and **Database Administration (Postgres, SQL Server)**. Proven success leading teams and driving strategic technical initiatives, most recently focusing on **AI/LLM integration** and modern cloud-based technologies (**AWS, Azure, Kafka, Kubernetes**). Strong emphasis on **SOLID principles**, **Design Patterns**, and delivering scalable, high-performance, and observable solutions.
+            </p>
+        </section>
+
+        <!-- Career Timeline Visualization -->
+        <section id="timeline" class="bg-white p-6 md:p-8 rounded-lg shadow-md mb-8">
+            <h3 class="text-3xl font-semibold text-slate-900 mb-4">Career Timeline</h3>
+            <p class="text-slate-600 mb-6">This chart visualizes my career progression over the last 15+ years. Hover over any bar to see the company and exact duration for each key role.</p>
+            <div class="chart-container">
+                <canvas id="timelineChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Interactive Core Expertise -->
+        <section id="skills" class="bg-white p-6 md:p-8 rounded-lg shadow-md mb-8">
+            <div class="flex flex-wrap justify-between items-center mb-4">
+                <h3 class="text-3xl font-semibold text-slate-900">Core Expertise</h3>
+                <button id="clear-filter" class="bg-red-100 text-red-800 text-sm font-medium px-4 py-2 rounded-full hover:bg-red-200 transition-colors hidden">&times; Clear Filter</button>
+            </div>
+            <p class="text-slate-600 mb-6">This section outlines my core technical expertise. **Click any skill** to filter my professional experience below and see where I've applied it. The relevant job roles and specific accomplishments will be highlighted.</p>
+            
+            <div id="skills-container" class="space-y-4">
+                <!-- Skills will be dynamically injected here -->
+            </div>
+        </section>
+
+        <!-- Filterable Professional Experience -->
+        <section id="experience">
+            <h3 class="text-3xl font-semibold text-slate-900 mb-4">Professional Experience</h3>
+            <p class="text-slate-600 mb-6">Here are my most relevant roles. Use the skill filters above to explore my specific contributions and achievements in each position.</p>
+            
+            <div id="experience-container" class="space-y-6">
+                <!-- Experience cards will be dynamically injected here -->
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center p-8 text-slate-500 text-sm">
+        <p>Interactive resume built for Franky Castillo. All content sourced from resume.</p>
+    </footer>
+
+    <script>
+        const appData = {
+            skills: [
+                { 
+                    category: "LANGUAGES & FRAMEWORKS", 
+                    items: [
+                        { name: "Java", keywords: ['java', 'j2ee'] },
+                        { name: "Spring Boot", keywords: ['spring boot', 'spring cloud', 'spring'] },
+                        { name: "C#", keywords: ['c#'] },
+                        { name: ".NET Core", keywords: ['.net core'] },
+                        { name: "Python", keywords: ['python'] },
+                        { name: "Entity Framework", keywords: ['entity framework'] },
+                        { name: "PHP", keywords: ['php'] }
+                    ] 
+                },
+                { 
+                    category: "AI/LLM INTEGRATION", 
+                    items: [
+                        { name: "AI/LLM", keywords: ['ai', 'llm', 'machine learning', 'ml'] },
+                        { name: "OpenAI", keywords: ['openai'] },
+                        { name: "Claude", keywords: ['claude'] },
+                        { name: "Bedrock", keywords: ['bedrock'] },
+                        { name: "Agentic Solutions", keywords: ['agentic'] }
+                    ] 
+                },
+                { 
+                    category: "CLOUD & DEVOPS", 
+                    items: [
+                        { name: "AWS", keywords: ['aws', 'lambda', 'dynamodb', 's3', 'api gateway'] },
+                        { name: "Azure", keywords: ['azure'] },
+                        { name: "Docker", keywords: ['docker'] },
+                        { name: "Kubernetes", keywords: ['kubernetes'] },
+                        { name: "Kafka", keywords: ['kafka'] },
+                        { name: "Jenkins", keywords: ['jenkins'] },
+                        { name: "Datadog", keywords: ['datadog'] }
+                    ] 
+                },
+                { 
+                    category: "DATABASES & DATA", 
+                    items: [
+                        { name: "Postgres", keywords: ['postgres', 'postgresql'] },
+                        { name: "MS SQL", keywords: ['ms sql', 'mssql', 'sql server'] },
+                        { name: "MySQL", keywords: ['mysql'] },
+                        { name: "Redis", keywords: ['redis'] },
+                        { name: "MongoDB", keywords: ['mongodb'] },
+                        { name: "ETL", keywords: ['etl', 'data pipelines'] },
+                        { name: "Hadoop/HBase", keywords: ['hadoop', 'hbase'] }
+                    ] 
+                },
+                { 
+                    category: "METHODOLOGIES", 
+                    items: [
+                        { name: "Agile Scrum", keywords: ['agile', 'scrum'] },
+                        { name: "SOLID", keywords: ['solid'] },
+                        { name: "Design Patterns", keywords: ['design patterns'] },
+                        { name: "Distributed Systems", keywords: ['distributed systems'] }
+                    ] 
+                }
+            ],
+            experience: [
+                {
+                    title: "Technical Project Lead, Lead Java Developer",
+                    company: "Slice Labs",
+                    location: "Ottawa, ON",
+                    dates: "December 2021 – Present",
+                    startDate: "2021-12-01",
+                    endDate: new Date().toISOString().split('T')[0],
+                    bullets: [
+                        "**AI Integration & Automation:** Technical lead for all new AI initiatives. Designed and implemented internal agentic solutions using **OpenAI, Claude, and Bedrock models** to automate data ingestion and analysis, resulting in a **30% efficiency gain** in platform onboarding.",
+                        "**Architecture & Delivery:** Provided end-to-end architecture and technical design for major business requirements and third-party integrations, organizing requirements into scoped work to maintain ownership and ensure successful, on-time delivery.",
+                        "**Platform Enhancement:** Collaborated with senior developers to enhance the core Slice Insurance Platform, focusing on distributed system patterns, **Kafka messaging**, and cloud observability practices (**Datadog**) within a **Kubernetes** environment.",
+                        "Coached team members on best practices, code quality, and design patterns through dedicated code reviews and technical design sessions."
+                    ],
+                    keywords: ['java', 'spring boot', 'ai', 'llm', 'openai', 'claude', 'bedrock', 'agentic', 'distributed systems', 'kafka', 'datadog', 'kubernetes', 'design patterns']
+                },
+                {
+                    title: "Principal Engineer",
+                    company: "RVezy",
+                    location: "Ottawa, ON",
+                    dates: "September 2021 – December 2021",
+                    startDate: "2021-09-01",
+                    endDate: "2021-12-01",
+                    bullets: [
+                        "**Technical Governance:** Defined and enforced core development patterns and standards for critical backend components (.NET Core/MSSQL), ensuring high code quality and architectural integrity across the engineering team.",
+                        "**Mentorship & Growth:** Provided direct technical coaching and learning opportunities to team members through 1-on-1 sessions and peer programming, raising the overall technical capacity of the team.",
+                        "Maintained oversight of technical documentation, diagrams, and observability tooling to ensure high visibility and optimization for distributed systems."
+                    ],
+                    keywords: ['c#', '.net core', 'mssql', 'design patterns', 'distributed systems']
+                },
+                {
+                    title: "Technical Project Lead, Senior Developer",
+                    company: "Slice Labs",
+                    location: "Ottawa, ON",
+                    dates: "April 2017 – September 2021",
+                    startDate: "2017-04-01",
+                    endDate: "2021-09-01",
+                    bullets: [
+                        "**Critical System Development:** Lead developer for the Insurance Cloud Service platform (Underwriting component), built on **Java (Spring Framework/Cloud)**, PostgreSQL, Redis, and hosted on **AWS/Kubernetes**.",
+                        "**High-Volume Integration:** Maintained and scaled APIs supporting over **20+ external data providers** (payments, geo, vehicle, weather data) using various protocols (REST, SOAP, SFTP, File Parsing).",
+                        "**Polylingual Development:** Developed and supported previous iterations of the underwriting component in both **C# (.NET Core 2.1.x)** and Java, demonstrating adaptability across major enterprise stacks.",
+                        "Managed the **REST interface** supporting the usage and consumption of internal **AI/ML models** implemented in **Python/Flask**."
+                    ],
+                    keywords: ['java', 'spring', 'spring cloud', 'postgres', 'redis', 'aws', 'kubernetes', 'c#', '.net core', 'ai', 'ml', 'python']
+                },
+                {
+                    title: "Lead, Server and Web Development",
+                    company: "Fuel Industries Ltd",
+                    location: "Ottawa, ON",
+                    dates: "October 2013 – April 2017",
+                    startDate: "2013-10-01",
+                    endDate: "2017-04-01",
+                    bullets: [
+                        "**Full-Stack Leadership:** Team Lead for multiple high-profile projects, including a retail app (Xamarin/.NET) and the architecture for a Tournament Management Website (PHP/Zend Framework 2).",
+                        "**High-Traffic Gaming:** Led the implementation of an interactive pure **HTML5 game for NFL (Stadium Takeover)**, leveraging **AWS services (API Gateway, Lambda, DynamoDB, S3)** to handle unpredictable user loads.",
+                        "**Large-Scale CMS:** Team Lead for the new websites for Warner Bros Kids digital properties (Scooby Doo, Looney Tunes), implementing an extremely flexible custom backend on **DotNetNuke** and **AWS** to handle 100% user/admin generated content."
+                    ],
+                    keywords: ['c#', '.net', 'php', 'aws', 'api gateway', 'lambda', 'dynamodb', 's3']
+                },
+                {
+                    title: "Senior Software Engineer",
+                    company: "Jitisoft (AIM American Iron and Metals)",
+                    location: "Ottawa, ON",
+                    dates: "October 2012 – August 2013",
+                    startDate: "2012-10-01",
+                    endDate: "2013-08-01",
+                    bullets: [
+                        "Contributed to the design and implementation of new modules for an open-source ERP System using **Python**.",
+                        "Developed a cloud-based Event Processing and Sensors network (EPN) using **Java** and **Apache technologies**."
+                    ],
+                    keywords: ['python', 'java']
+                },
+                {
+                    title: "Lead, Software Development",
+                    company: "MediaMiser",
+                    location: "Ottawa, ON",
+                    dates: "April 2011 – October 2012",
+                    startDate: "2011-04-01",
+                    endDate: "2012-10-01",
+                    bullets: [
+                        "Team Lead for the implementation of a backend engine using **Java** and **Hadoop/HBase** to support various desktop and mobile projects.",
+                        "Led frontend development (**PHP, jQuery, Zend Framework**) to consume services provided by the new backend engine."
+                    ],
+                    keywords: ['java', 'hadoop', 'hbase', 'php']
+                }
+            ]
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderSkills();
+            renderExperience();
+            renderTimelineChart();
+            addEventListeners();
+        });
+
+        function renderSkills() {
+            const container = document.getElementById('skills-container');
+            container.innerHTML = ''; 
+            appData.skills.forEach(category => {
+                let categoryHtml = `
+                    <div class="mb-4">
+                        <h4 class="text-lg font-semibold text-slate-600 mb-3">${category.category}</h4>
+                        <div classs="flex flex-wrap gap-2">
+                `;
+                category.items.forEach(item => {
+                    categoryHtml += `
+                        <button
+                            data-skill="${item.name.toLowerCase()}"
+                            data-keywords="${item.keywords.join(',')}"
+                            class="skill-btn bg-blue-100 text-blue-800 text-sm font-medium mr-2 mb-2 px-4 py-2 rounded-full hover:bg-blue-200 hover:shadow-sm transition-all"
+                        >
+                            ${item.name}
+                        </button>
+                    `;
+                });
+                categoryHtml += `</div></div>`;
+                container.innerHTML += categoryHtml;
+            });
+        }
+
+        function renderExperience(filterKeywords = []) {
+            const container = document.getElementById('experience-container');
+            container.innerHTML = '';
+            let jobCounter = 0;
+
+            appData.experience.forEach(job => {
+                const isMatch = filterKeywords.length === 0 || job.keywords.some(k => filterKeywords.includes(k));
+                
+                if (isMatch) {
+                    jobCounter++;
+                    let bulletsHtml = job.bullets.map(bullet => {
+                        let bulletText = bullet;
+                        if (filterKeywords.length > 0) {
+                            const hasKeyword = filterKeywords.some(kw => bullet.toLowerCase().includes(kw));
+                            if (hasKeyword) {
+                                bulletText = `<span class="bg-yellow-100 ring-1 ring-yellow-300">${bullet}</span>`;
+                            }
+                        }
+                        return `<li class="mb-2 text-slate-700">${bulletText}</li>`;
+                    }).join('');
+
+                    const cardHtml = `
+                        <div class="job-card bg-white p-6 rounded-lg shadow-md transition-all">
+                            <h4 class="text-2xl font-semibold text-slate-900">${job.title}</h4>
+                            <p class="text-lg font-medium text-blue-700 mb-1">${job.company} | ${job.location}</p>
+                            <p class="text-md text-slate-500 mb-4">${job.dates}</p>
+                            <ul class="list-disc list-outside ml-5 space-y-2">
+                                ${bulletsHtml}
+                            </ul>
+                        </div>
+                    `;
+                    container.innerHTML += cardHtml;
+                }
+            });
+
+            if (jobCounter === 0) {
+                container.innerHTML = `<p class="text-center text-slate-600 text-lg p-8 bg-white rounded-lg shadow-md">No experience found matching this skill.</p>`;
+            }
+        }
+
+        function addEventListeners() {
+            const skillsContainer = document.getElementById('skills-container');
+            const clearFilterBtn = document.getElementById('clear-filter');
+
+            skillsContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('skill-btn')) {
+                    const keywords = e.target.dataset.keywords.split(',');
+                    
+                    renderExperience(keywords);
+                    
+                    document.querySelectorAll('.skill-btn').forEach(btn => {
+                        btn.classList.remove('bg-blue-600', 'text-white');
+                        btn.classList.add('bg-blue-100', 'text-blue-800');
+                    });
+                    
+                    e.target.classList.add('bg-blue-600', 'text-white');
+                    e.target.classList.remove('bg-blue-100', 'text-blue-800');
+                    
+                    clearFilterBtn.classList.remove('hidden');
+                }
+            });
+
+            clearFilterBtn.addEventListener('click', () => {
+                renderExperience();
+                
+                document.querySelectorAll('.skill-btn').forEach(btn => {
+                    btn.classList.remove('bg-blue-600', 'text-white');
+                    btn.classList.add('bg-blue-100', 'text-blue-800');
+                });
+                
+                clearFilterBtn.classList.add('hidden');
+            });
+        }
+
+        function renderTimelineChart() {
+            const ctx = document.getElementById('timelineChart').getContext('2d');
+            
+            const chartData = appData.experience.map(job => ({
+                x: [job.startDate, job.endDate],
+                y: `${job.title} @ ${job.company}`,
+                company: job.company,
+                title: job.title
+            })).reverse(); 
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: chartData.map(d => d.y),
+                    datasets: [{
+                        label: 'Experience',
+                        data: chartData,
+                        backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        borderSkipped: false,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'year'
+                            },
+                            min: '2011-01-01',
+                            max: new Date(new Date().getFullYear() + 1, 0, 1).toISOString().split('T')[0],
+                            grid: {
+                                display: true,
+                                color: 'rgba(200, 200, 200, 0.2)'
+                            },
+                            ticks: {
+                                font: {
+                                    size: 10
+                                }
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                font: {
+                                    size: 11
+                                },
+                                color: '#334155'
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const d = context.raw;
+                                    const startDate = new Date(d.x[0]).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+                                    const endDate = d.x[1].includes(new Date().getFullYear()) ? 'Present' : new Date(d.x[1]).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+                                    return `${d.title}: ${startDate} - ${endDate}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>
