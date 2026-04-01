@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Resume | Franky Castillo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-    
+    <script
+        src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+
     <!-- Chosen Palette: Warm Neutral (Slate) with Blue Accent -->
     <!-- Application Structure Plan: The SPA is designed as an interactive dashboard, not a linear document. The structure is: 1) Header (Contact/Identity), 2) Professional Profile (Summary), 3) Career Timeline (Chart.js Gantt-style chart for high-level visual summary), 4) Interactive Core Expertise (Clickable skill buttons), and 5) Filterable Professional Experience (Job cards that dynamically show/hide/highlight). This structure was chosen because a resume's primary user task is skill-to-experience mapping. The user flow is: Read Profile -> See Skills -> Click a Skill -> Instantly see relevant job history. This is far more efficient and engaging for a recruiter or hiring manager than manually scanning a static document. -->
     <!-- Visualization & Content Choices: [Profile -> Goal: Inform -> Method: HTML Text]. [Career Timeline -> Goal: Change/Summarize -> Method: Chart.js Horizontal Bar (Gantt) Chart -> Interaction: Hover Tooltip -> Justification: Visualizes 20+ years of experience instantly]. [Core Expertise -> Goal: Organize/Interact -> Method: HTML/Tailwind Buttons -> Interaction: OnClick filters -> Justification: Primary interactive element, maps to user's mental model]. [Professional Experience -> Goal: Inform/Compare/Filter -> Method: HTML/Tailwind Cards with data-attributes -> Interaction: Dynamically shown/hidden/highlighted by JS -> Justification: This is the 'answer' to the user's 'question' (the skill click)]. -->
@@ -23,6 +25,7 @@
             height: 350px;
             max-height: 400px;
         }
+
         @media (min-width: 768px) {
             .chart-container {
                 height: 400px;
@@ -30,6 +33,7 @@
         }
     </style>
 </head>
+
 <body class="bg-slate-50 text-slate-800 font-sans leading-relaxed">
 
     <main class="container mx-auto p-4 py-8 md:p-12">
@@ -37,13 +41,19 @@
         <!-- Header -->
         <header class="mb-12 text-center">
             <h1 class="text-5xl md:text-6xl font-bold text-slate-900 mb-2">FRANKY CASTILLO</h1>
-            <h2 class="text-2xl md:text-3xl font-light text-blue-700 mb-4">Technical Project Lead / Lead Backend Developer</h2>
+            <h2 class="text-2xl md:text-3xl font-light text-blue-700 mb-4">Principal Software Engineer / Technical
+                Project Lead</h2>
             <div class="flex justify-center space-x-6 text-slate-600">
                 <span>Tampa Bay Area, USA</span>
                 <span>|</span>
-                <a href="mailto:frankycastillo@gmail.com" class="text-blue-600 hover:underline">frankycastillo@gmail.com</a>
+                <a href="mailto:frankycastillo@gmail.com"
+                    class="text-blue-600 hover:underline">frankycastillo@gmail.com</a>
                 <span>|</span>
-                <a href="https://www.linkedin.com/in/frankycastillo/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">LinkedIn Profile</a>
+                <a href="https://www.linkedin.com/in/frankycastillo/" target="_blank" rel="noopener noreferrer"
+                    class="text-blue-600 hover:underline">LinkedIn Profile</a>
+                <span>|</span>
+                <a href="https://www.thedevkrewe.com" target="_blank" rel="noopener noreferrer"
+                    class="text-blue-600 hover:underline">The Dev Krewe</a>
             </div>
         </header>
 
@@ -51,16 +61,24 @@
         <section id="profile" class="bg-white p-6 md:p-8 rounded-lg shadow-md mb-8">
             <h3 class="text-3xl font-semibold text-slate-900 mb-4">Professional Profile</h3>
             <p class="text-lg text-slate-700">
-                Highly accomplished Technical Project Lead and Lead Backend Developer with 20+ years of experience in architecting and delivering complex, distributed systems. Expert in Java (Spring/Spring Boot, C# (.NET Core), and Database Administration (Postgres, SQL Server). 
-                Proven success leading teams and driving strategic technical initiatives, most recently focusing on AI/LLM integration and modern cloud-based technologies (AWS, Azure, Kafka, Kubernetes). 
-                Strong emphasis on SOLID principles, Design Patterns, and delivering scalable, high-performance, and observable solutions.
+                Highly accomplished Technical Project Lead and Lead Backend Developer with 20+ years of experience in
+                architecting and delivering complex, distributed systems. Expert in Java (Spring/Spring Boot, C# (.NET
+                Core), and Database Administration (Postgres, SQL Server).
+                Proven success leading teams and driving strategic technical initiatives, most recently focusing on
+                AI/LLM integration and modern cloud-based technologies (AWS, Azure, Kafka, Kubernetes).
+                Founder of <a href="https://www.thedevkrewe.com" target="_blank" rel="noopener noreferrer"
+                    class="text-blue-600 hover:underline font-medium">The Dev Krewe</a>, partnering with businesses to
+                architect success through custom, scalable software solutions.
+                Strong emphasis on SOLID principles, Design Patterns, and delivering scalable, high-performance, and
+                observable solutions.
             </p>
         </section>
 
         <!-- Career Timeline Visualization -->
         <section id="timeline" class="bg-white p-6 md:p-8 rounded-lg shadow-md mb-8">
             <h3 class="text-3xl font-semibold text-slate-900 mb-4">Career Timeline</h3>
-            <p class="text-slate-600 mb-6">This chart visualizes my career progression over the last 15+ years. Hover over any bar to see the company and exact duration for each key role.</p>
+            <p class="text-slate-600 mb-6">This chart visualizes my career progression over the last 15+ years. Hover
+                over any bar to see the company and exact duration for each key role.</p>
             <div class="chart-container">
                 <canvas id="timelineChart"></canvas>
             </div>
@@ -70,10 +88,14 @@
         <section id="skills" class="bg-white p-6 md:p-8 rounded-lg shadow-md mb-8">
             <div class="flex flex-wrap justify-between items-center mb-4">
                 <h3 class="text-3xl font-semibold text-slate-900">Core Expertise</h3>
-                <button id="clear-filter" class="bg-red-100 text-red-800 text-sm font-medium px-4 py-2 rounded-full hover:bg-red-200 transition-colors hidden">&times; Clear Filter</button>
+                <button id="clear-filter"
+                    class="bg-red-100 text-red-800 text-sm font-medium px-4 py-2 rounded-full hover:bg-red-200 transition-colors hidden">&times;
+                    Clear Filter</button>
             </div>
-            <p class="text-slate-600 mb-6">This section outlines my core technical expertise. **Click any skill** to filter my professional experience below and see where I've applied it. The relevant job roles and specific accomplishments will be highlighted.</p>
-            
+            <p class="text-slate-600 mb-6">This section outlines my core technical expertise. **Click any skill** to
+                filter my professional experience below and see where I've applied it. The relevant job roles and
+                specific accomplishments will be highlighted.</p>
+
             <div id="skills-container" class="space-y-4">
                 <!-- Skills will be dynamically injected here -->
             </div>
@@ -82,8 +104,9 @@
         <!-- Filterable Professional Experience -->
         <section id="experience">
             <h3 class="text-3xl font-semibold text-slate-900 mb-4">Professional Experience</h3>
-            <p class="text-slate-600 mb-6">Here are my most relevant roles. Use the skill filters above to explore my specific contributions and achievements in each position.</p>
-            
+            <p class="text-slate-600 mb-6">Here are my most relevant roles. Use the skill filters above to explore my
+                specific contributions and achievements in each position.</p>
+
             <div id="experience-container" class="space-y-6">
                 <!-- Experience cards will be dynamically injected here -->
             </div>
@@ -98,30 +121,30 @@
     <script>
         const appData = {
             skills: [
-                { 
-                    category: "LANGUAGES & FRAMEWORKS", 
+                {
+                    category: "LANGUAGES & FRAMEWORKS",
                     items: [
                         { name: "Java", keywords: ['java', 'j2ee'] },
                         { name: "Spring Boot", keywords: ['spring boot', 'spring cloud', 'spring'] },
                         { name: "C#", keywords: ['c#'] },
-                        { name: ".NET Core", keywords: ['.net core'] },
+                        { name: ".NET", keywords: ['.net core'] },
                         { name: "Python", keywords: ['python'] },
                         { name: "Entity Framework", keywords: ['ef'] },
                         { name: "PHP", keywords: ['php'] }
-                    ] 
+                    ]
                 },
-                { 
-                    category: "AI/LLM INTEGRATION", 
+                {
+                    category: "AI/LLM INTEGRATION",
                     items: [
                         { name: "AI/LLM", keywords: ['ai', 'llm', 'machine learning', 'ml'] },
                         { name: "OpenAI", keywords: ['openai'] },
                         { name: "Claude", keywords: ['claude'] },
                         { name: "Bedrock", keywords: ['bedrock'] },
                         { name: "Agentic Solutions", keywords: ['agentic'] }
-                    ] 
+                    ]
                 },
-                { 
-                    category: "CLOUD & DEVOPS", 
+                {
+                    category: "CLOUD & DEVOPS",
                     items: [
                         { name: "AWS", keywords: ['aws', 'lambda', 'dynamodb', 's3', 'api gateway'] },
                         { name: "Azure", keywords: ['azure'] },
@@ -130,10 +153,10 @@
                         { name: "Kafka", keywords: ['kafka'] },
                         { name: "Jenkins", keywords: ['jenkins'] },
                         { name: "Datadog", keywords: ['datadog'] }
-                    ] 
+                    ]
                 },
-                { 
-                    category: "DATABASES & DATA", 
+                {
+                    category: "DATABASES & DATA",
                     items: [
                         { name: "Postgres", keywords: ['postgres', 'postgresql'] },
                         { name: "MS SQL", keywords: ['ms sql', 'mssql', 'sql server'] },
@@ -142,35 +165,70 @@
                         { name: "MongoDB", keywords: ['mongodb'] },
                         { name: "ETL", keywords: ['etl', 'data pipelines'] },
                         { name: "Hadoop/HBase", keywords: ['hadoop', 'hbase'] }
-                    ] 
+                    ]
                 },
-                { 
-                    category: "METHODOLOGIES", 
+                {
+                    category: "CONSULTING & STRATEGY",
+                    items: [
+                        { name: "Technical Consulting", keywords: ['consulting', 'strategy', 'digital strategy'] },
+                        { name: "Solution Architecture", keywords: ['architecture', 'distributed systems', 'cloud'] }
+                    ]
+                },
+                {
+                    category: "METHODOLOGIES",
                     items: [
                         { name: "Agile Scrum", keywords: ['agile', 'scrum'] },
                         { name: "SOLID", keywords: ['solid'] },
                         { name: "Design Patterns", keywords: ['design patterns'] },
                         { name: "Distributed Systems", keywords: ['distributed systems'] },
                         { name: "Cloud Solutions", keywords: ['cloud', 'aws', 'azure'] }
-                    ] 
+                    ]
                 }
             ],
             experience: [
+                {
+                    title: "Founder & Lead Architect",
+                    company: "The Dev Krewe",
+                    location: "Tampa Bay Area, FL (Remote)",
+                    dates: "January 2015 – Present",
+                    startDate: "2015-01-01",
+                    endDate: new Date().toISOString().split('T')[0],
+                    bullets: [
+                        "**Strategic Consulting:** Partnering with businesses to architect success through custom, scalable software solutions and digital strategy alignment.",
+                        "**AI Integration:** Designing and implementing AI-driven solutions to automate business processes and enhance data-driven decision-making.",
+                        "**Technical Leadership:** Guiding organizations through complex technology decisions and providing fractional CTO services for high-growth startups."
+                    ],
+                    keywords: ['java', 'python', 'ai', 'llm', 'distributed systems', 'cloud', 'architecture', 'consulting', 'digital strategy']
+                },
+                {
+                    title: "Lead Application Developer (Python, Java, ML)",
+                    company: "Raymond James Financial",
+                    location: "St. Petersburg, FL (Hybrid)",
+                    dates: "January 2026 – Present",
+                    startDate: "2026-01-01",
+                    endDate: new Date().toISOString().split('T')[0],
+                    bullets: [
+                        "**Enterprise AI Ecosystem: Designed and led the development of a firm-wide AI Agentic system using AWS Bedrock and AWS Agent Core to power an internal Agentic AI driven chat",
+                        "**Dynamic Agent Store: Engineered a configuration-driven Agent Store using Java Spring Boot and Oracle, enabling polymorphic agent behavior and high scalability with multiple stores including AW S3 and DB.",
+                        "**Framework Architecture: Architecting autonomous workflows using Strands in Python, integrating AWS Bedrock Agent Core services for enterprise reliability and security.",
+                        "**Hybrid Integration: Orchestrating seamless connectivity between AWS cloud services and on-prem systems, supporting MCP gateways and high-concurrency streaming for internal portals."
+                    ],
+                    keywords: ['java', 'spring boot', 'python', 'aws agent core', 'ai', 'llm', 'openai', 'claude', 'bedrock', 'agentic', 'distributed systems', 'datadog', 'kubernetes', 'design patterns', 'cloud', 'agile', 'docker', 'jenkins', 'redis', 'enterprise solutions']
+                },
                 {
                     title: "Technical Project Lead, Lead Java Developer",
                     company: "Slice Insurance",
                     location: "Tampa Bay, FL (Remote)",
                     dates: "April 2017 – October 2025",
                     startDate: "2021-12-01",
-                    endDate: "2025-10-01",
-                    endDate: new Date().toISOString().split('T')[0],
+                    endDate: "2025-10-31",
                     bullets: [
                         "**AI Integration & Automation:** Technical lead for all new AI initiatives. Designed and implemented internal agentic solutions using **OpenAI, Claude, and Bedrock models** to automate data ingestion and analysis, resulting in a **30% efficiency gain** in platform onboarding.",
                         "**Architecture & Delivery:** Provided end-to-end architecture and technical design for major business requirements and third-party integrations, organizing requirements into scoped work to maintain ownership and ensure successful, on-time delivery.",
                         "**Platform Enhancement:** Collaborated with senior developers to enhance the core Slice Insurance Platform, focusing on distributed system patterns, **Kafka messaging**, and cloud observability practices (**Datadog**) within a **Kubernetes** environment.",
                         "Coached team members on best practices, code quality, and design patterns through dedicated code reviews and technical design sessions."
                     ],
-                    keywords: ['java', 'spring boot', 'ai', 'llm', 'openai', 'claude', 'bedrock', 'agentic', 'distributed systems', 'kafka', 'datadog', 'kubernetes', 'design patterns', 'cloud', 'agile','docker','jenkins','redis','etl','solid','design patterns' ]
+                    keywords: ['java', 'spring boot', 'ai', 'llm', 'openai', 'claude', 'bedrock', 'agentic', 'distributed systems', 'kafka', 'datadog', 'kubernetes', 'design patterns', 'cloud', 'agile', 'docker', 'jenkins', 'redis', 'etl', 'enterprise solutions', 'postgres']
                 },
                 {
                     title: "Principal Engineer",
@@ -185,7 +243,7 @@
                         "Maintained oversight of technical documentation, diagrams, and observability tooling to ensure high visibility and optimization for distributed systems.",
                         "Coached team members on best practices, code quality, and design patterns through dedicated code reviews and technical design sessions."
                     ],
-                    keywords: ['c#', '.net core', 'mssql', 'design patterns', 'distributed systems', 'cloud', 'agile','azure', 'ef','docker','redis','mongodb','etl','solid','design patterns']
+                    keywords: ['c#', '.net core', 'mssql', 'design patterns', 'distributed systems', 'cloud', 'agile', 'azure', 'ef', 'docker', 'redis', 'mongodb', 'etl', 'solid', 'design patterns']
                 },
                 {
                     title: "Technical Project Lead, Lead Backend Developer",
@@ -200,7 +258,7 @@
                         "**Polylingual Development:** Developed and supported previous iterations of the underwriting component in both **C# (.NET Core 2.1.x)** and Java, demonstrating adaptability across major enterprise stacks.",
                         "Managed the **REST interface** supporting the usage and consumption of internal **AI/ML models** implemented in **Python/Flask**."
                     ],
-                    keywords: ['java', 'spring', 'spring cloud', 'postgres', 'redis', 'aws', 'datadog', 'kubernetes', 'c#', '.net core', 'ai', 'ml', 'python', 'cloud', 'agile','docker','jenkins','redis','etl','solid','design patterns']
+                    keywords: ['java', 'spring', 'spring cloud', 'postgres', 'redis', 'aws', 'datadog', 'kubernetes', 'c#', '.net core', 'ai', 'ml', 'python', 'cloud', 'agile', 'docker', 'jenkins', 'redis', 'etl', 'solid', 'design patterns']
                 },
                 {
                     title: "Lead, Server and Web Development",
@@ -214,7 +272,7 @@
                         "**High-Traffic Gaming:** Led the implementation of an interactive pure **HTML5 game for NFL (Stadium Takeover)**, leveraging **AWS services (API Gateway, Lambda, DynamoDB, S3)** to handle unpredictable user loads.",
                         "**Large-Scale CMS:** Team Lead for the new websites for Warner Bros Kids digital properties (Scooby Doo, Looney Tunes), implementing an extremely flexible custom backend on **DotNetNuke** and **AWS** to handle 100% user/admin generated content."
                     ],
-                    keywords: ['c#', '.net', 'php', 'aws', 'api gateway', 'lambda', 'dynamodb', 's3', 'cloud', 'agile','ef','jenkins','redis','mongodb','etl','solid','design patterns']
+                    keywords: ['c#', '.net', 'php', 'aws', 'api gateway', 'lambda', 'dynamodb', 's3', 'cloud', 'agile', 'ef', 'jenkins', 'redis', 'mongodb', 'etl', 'solid', 'design patterns', 'mssql']
                 },
                 {
                     title: "Senior Software Engineer",
@@ -227,7 +285,7 @@
                         "Contributed to the design and implementation of new modules for an open-source ERP System using **Python**.",
                         "Developed a cloud-based Event Processing and Sensors network (EPN) using **Java** and **Apache technologies**."
                     ],
-                    keywords: ['python', 'java', 'cloud', 'agile','solid','design patterns']
+                    keywords: ['python', 'java', 'cloud', 'agile', 'solid', 'postgres', 'design patterns']
                 },
                 {
                     title: "Lead, Software Development",
@@ -240,7 +298,7 @@
                         "Team Lead for the implementation of a backend engine using **Java** and **Hadoop/HBase** to support various desktop and mobile projects.",
                         "Led frontend development (**PHP, jQuery, Zend Framework**) to consume services provided by the new backend engine."
                     ],
-                    keywords: ['java', 'hadoop', 'hbase', 'php','jenkins','mysql','redis','etl','solid','design patterns']
+                    keywords: ['java', 'hadoop', 'hbase', 'php', 'jenkins', 'mysql', 'redis', 'etl', 'solid', 'design patterns']
                 }
             ]
         };
@@ -254,7 +312,7 @@
 
         function renderSkills() {
             const container = document.getElementById('skills-container');
-            container.innerHTML = ''; 
+            container.innerHTML = '';
             appData.skills.forEach(category => {
                 let categoryHtml = `
                     <div class="mb-4">
@@ -284,7 +342,7 @@
 
             appData.experience.forEach(job => {
                 const isMatch = filterKeywords.length === 0 || job.keywords.some(k => filterKeywords.includes(k));
-                
+
                 if (isMatch) {
                     jobCounter++;
                     let bulletsHtml = job.bullets.map(bullet => {
@@ -324,42 +382,42 @@
             skillsContainer.addEventListener('click', (e) => {
                 if (e.target.classList.contains('skill-btn')) {
                     const keywords = e.target.dataset.keywords.split(',');
-                    
+
                     renderExperience(keywords);
-                    
+
                     document.querySelectorAll('.skill-btn').forEach(btn => {
                         btn.classList.remove('bg-blue-600', 'text-white');
                         btn.classList.add('bg-blue-100', 'text-blue-800');
                     });
-                    
+
                     e.target.classList.add('bg-blue-600', 'text-white');
                     e.target.classList.remove('bg-blue-100', 'text-blue-800');
-                    
+
                     clearFilterBtn.classList.remove('hidden');
                 }
             });
 
             clearFilterBtn.addEventListener('click', () => {
                 renderExperience();
-                
+
                 document.querySelectorAll('.skill-btn').forEach(btn => {
                     btn.classList.remove('bg-blue-600', 'text-white');
                     btn.classList.add('bg-blue-100', 'text-blue-800');
                 });
-                
+
                 clearFilterBtn.classList.add('hidden');
             });
         }
 
         function renderTimelineChart() {
             const ctx = document.getElementById('timelineChart').getContext('2d');
-            
+
             const chartData = appData.experience.map(job => ({
                 x: [job.startDate, job.endDate],
                 y: `${job.title} @ ${job.company}`,
                 company: job.company,
                 title: job.title
-            })).reverse(); 
+            })).reverse();
 
             new Chart(ctx, {
                 type: 'bar',
@@ -415,7 +473,7 @@
                         },
                         tooltip: {
                             callbacks: {
-                                label: function(context) {
+                                label: function (context) {
                                     const d = context.raw;
                                     const startDate = new Date(d.x[0]).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
                                     const endDate = d.x[1].includes(new Date().getFullYear()) ? 'Present' : new Date(d.x[1]).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
@@ -430,4 +488,5 @@
 
     </script>
 </body>
+
 </html>
