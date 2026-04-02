@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Resume | Franky Castillo</title>
     <script src="https://cdn.tailwindcss.com"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
     <script
         src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
@@ -61,16 +62,16 @@
         <section id="profile" class="bg-white p-6 md:p-8 rounded-lg shadow-md mb-8">
             <h3 class="text-3xl font-semibold text-slate-900 mb-4">Professional Profile</h3>
             <p class="text-lg text-slate-700">
-                Highly accomplished Technical Project Lead and Lead Backend Developer with 20+ years of experience in
-                architecting and delivering complex, distributed systems. Expert in Java (Spring/Spring Boot, C# (.NET
+                Highly accomplished Solutions Architech and Technical Project Lead with 20+ years of experience 
+                architecting and delivering complex, distributed cloud systems. Expert in Java (Spring/Spring Boot, C# (.NET
                 Core), and Database Administration (Postgres, SQL Server).
-                Proven success leading teams and driving strategic technical initiatives, most recently focusing on
+                Proven success leading teams and driving strategic technical initiatives, with a recent focus on
                 AI/LLM integration and modern cloud-based technologies (AWS, Azure, Kafka, Kubernetes).
                 Founder of <a href="https://www.thedevkrewe.com" target="_blank" rel="noopener noreferrer"
                     class="text-blue-600 hover:underline font-medium">The Dev Krewe</a>, partnering with businesses to
                 architect success through custom, scalable software solutions.
-                Strong emphasis on SOLID principles, Design Patterns, and delivering scalable, high-performance, and
-                observable solutions.
+                Strong emphasis on Cloud Architectures, Design Patterns, and delivering scalable, high-performance, and
+                observable cloud solutions for the AI era.
             </p>
         </section>
 
@@ -187,6 +188,7 @@
             ],
             experience: [
                 {
+                    type: "consulting",
                     title: "Founder & Lead Architect",
                     company: "The Dev Krewe",
                     location: "Tampa Bay Area, FL (Remote)",
@@ -201,6 +203,7 @@
                     keywords: ['java', 'python', 'ai', 'llm', 'distributed systems', 'cloud', 'architecture', 'consulting', 'digital strategy']
                 },
                 {
+                    type: "employment",
                     title: "Lead Application Developer (Python, Java, ML)",
                     company: "Raymond James Financial",
                     location: "St. Petersburg, FL (Hybrid)",
@@ -216,11 +219,12 @@
                     keywords: ['java', 'spring boot', 'python', 'aws agent core', 'ai', 'llm', 'openai', 'claude', 'bedrock', 'agentic', 'distributed systems', 'datadog', 'kubernetes', 'design patterns', 'cloud', 'agile', 'docker', 'jenkins', 'redis', 'enterprise solutions']
                 },
                 {
+                    type: "employment",
                     title: "Technical Project Lead, Lead Java Developer",
                     company: "Slice Insurance",
                     location: "Tampa Bay, FL (Remote)",
                     dates: "April 2017 – October 2025",
-                    startDate: "2021-12-01",
+                    startDate: "2017-04-01",
                     endDate: "2025-10-31",
                     bullets: [
                         "**AI Integration & Automation:** Technical lead for all new AI initiatives. Designed and implemented internal agentic solutions using **OpenAI, Claude, and Bedrock models** to automate data ingestion and analysis, resulting in a **30% efficiency gain** in platform onboarding.",
@@ -231,7 +235,8 @@
                     keywords: ['java', 'spring boot', 'ai', 'llm', 'openai', 'claude', 'bedrock', 'agentic', 'distributed systems', 'kafka', 'datadog', 'kubernetes', 'design patterns', 'cloud', 'agile', 'docker', 'jenkins', 'redis', 'etl', 'enterprise solutions', 'postgres']
                 },
                 {
-                    title: "Principal Engineer",
+                    type: "consulting",
+                    title: "Principal Engineer (Consulting)",
                     company: "RVezy",
                     location: "Ottawa, ON",
                     dates: "September 2021 – December 2021",
@@ -246,22 +251,8 @@
                     keywords: ['c#', '.net core', 'mssql', 'design patterns', 'distributed systems', 'cloud', 'agile', 'azure', 'ef', 'docker', 'redis', 'mongodb', 'etl', 'solid', 'design patterns']
                 },
                 {
-                    title: "Technical Project Lead, Lead Backend Developer",
-                    company: "Slice Labs",
-                    location: "Ottawa, ON",
-                    dates: "April 2017 – September 2021",
-                    startDate: "2017-04-01",
-                    endDate: "2021-09-01",
-                    bullets: [
-                        "**Critical System Development:** Lead developer for the Insurance Cloud Service platform (Underwriting component), built on **Java (Spring Framework/Cloud)**, PostgreSQL, Redis, and hosted on **AWS/Kubernetes**.",
-                        "**High-Volume Integration:** Maintained and scaled APIs supporting over **20+ external data providers** (payments, geo, vehicle, weather data) using various protocols (REST, SOAP, SFTP, File Parsing).",
-                        "**Polylingual Development:** Developed and supported previous iterations of the underwriting component in both **C# (.NET Core 2.1.x)** and Java, demonstrating adaptability across major enterprise stacks.",
-                        "Managed the **REST interface** supporting the usage and consumption of internal **AI/ML models** implemented in **Python/Flask**."
-                    ],
-                    keywords: ['java', 'spring', 'spring cloud', 'postgres', 'redis', 'aws', 'datadog', 'kubernetes', 'c#', '.net core', 'ai', 'ml', 'python', 'cloud', 'agile', 'docker', 'jenkins', 'redis', 'etl', 'solid', 'design patterns']
-                },
-                {
-                    title: "Lead, Server and Web Development",
+                    type: "employment",
+                    title: "Lead Developer, Server and Web Development",
                     company: "Fuel Industries Ltd",
                     location: "Ottawa, ON",
                     dates: "October 2013 – April 2017",
@@ -275,6 +266,7 @@
                     keywords: ['c#', '.net', 'php', 'aws', 'api gateway', 'lambda', 'dynamodb', 's3', 'cloud', 'agile', 'ef', 'jenkins', 'redis', 'mongodb', 'etl', 'solid', 'design patterns', 'mssql']
                 },
                 {
+                    type: "employment",
                     title: "Senior Software Engineer",
                     company: "Jitisoft (AIM American Iron and Metals)",
                     location: "Ottawa, ON",
@@ -288,7 +280,8 @@
                     keywords: ['python', 'java', 'cloud', 'agile', 'solid', 'postgres', 'design patterns']
                 },
                 {
-                    title: "Lead, Software Development",
+                    type: "employment",
+                    title: "Lead Developer",
                     company: "MediaMiser",
                     location: "Ottawa, ON",
                     dates: "April 2011 – October 2012",
@@ -412,22 +405,72 @@
         function renderTimelineChart() {
             const ctx = document.getElementById('timelineChart').getContext('2d');
 
+            const typeColors = {
+                consulting: { base: [139, 0, 0], light: [178, 34, 34], dark: [100, 0, 0] },
+                employment: { base: [59, 130, 246], light: [96, 165, 250], dark: [30, 64, 175] }
+            };
+
+            const bar3dPlugin = {
+                id: 'bar3d',
+                afterDatasetDraw(chart) {
+                    const { ctx: c } = chart;
+                    const meta = chart.getDatasetMeta(0);
+                    meta.data.forEach((bar, i) => {
+                        const { x, y, width, height, base } = bar.getProps(['x', 'y', 'width', 'height', 'base']);
+                        const left = Math.min(x, base);
+                        const barWidth = Math.abs(x - base);
+                        const barHeight = height;
+                        const top = y - barHeight / 2;
+                        const type = chartData[i].type;
+                        const col = typeColors[type];
+                        const highlightH = Math.max(barHeight * 0.3, 2);
+                        const shadowH = Math.max(barHeight * 0.25, 2);
+
+                        // top highlight
+                        const hlGrad = c.createLinearGradient(0, top, 0, top + highlightH);
+                        hlGrad.addColorStop(0, `rgba(${col.light.join(',')}, 0.6)`);
+                        hlGrad.addColorStop(1, `rgba(${col.base.join(',')}, 0)`);
+                        c.fillStyle = hlGrad;
+                        c.beginPath();
+                        c.roundRect(left, top, barWidth, highlightH, [4, 4, 0, 0]);
+                        c.fill();
+
+                        // bottom shadow
+                        const shGrad = c.createLinearGradient(0, top + barHeight - shadowH, 0, top + barHeight);
+                        shGrad.addColorStop(0, `rgba(${col.dark.join(',')}, 0)`);
+                        shGrad.addColorStop(1, `rgba(${col.dark.join(',')}, 0.5)`);
+                        c.fillStyle = shGrad;
+                        c.beginPath();
+                        c.roundRect(left, top + barHeight - shadowH, barWidth, shadowH, [0, 0, 4, 4]);
+                        c.fill();
+                    });
+                }
+            };
+
             const chartData = appData.experience.map(job => ({
                 x: [job.startDate, job.endDate],
                 y: `${job.title} @ ${job.company}`,
                 company: job.company,
-                title: job.title
+                title: job.title,
+                type: job.type
             })).reverse();
 
             new Chart(ctx, {
                 type: 'bar',
+                plugins: [bar3dPlugin],
                 data: {
                     labels: chartData.map(d => d.y),
                     datasets: [{
                         label: 'Experience',
                         data: chartData,
-                        backgroundColor: 'rgba(59, 130, 246, 0.7)',
-                        borderColor: 'rgba(59, 130, 246, 1)',
+                        backgroundColor: chartData.map(d => {
+                            const c = typeColors[d.type].base;
+                            return `rgba(${c[0]}, ${c[1]}, ${c[2]}, 0.8)`;
+                        }),
+                        borderColor: chartData.map(d => {
+                            const c = typeColors[d.type].dark;
+                            return `rgb(${c[0]}, ${c[1]}, ${c[2]})`;
+                        }),
                         borderWidth: 1,
                         borderRadius: 4,
                         borderSkipped: false,
@@ -469,7 +512,18 @@
                     },
                     plugins: {
                         legend: {
-                            display: false
+                            display: true,
+                            onClick: () => {},
+                            labels: {
+                                color: '#334155',
+                                font: { size: 12 },
+                                generateLabels: function() {
+                                    return [
+                                        { text: 'Employment', fillStyle: `rgba(${typeColors.employment.base.join(',')}, 0.8)`, strokeStyle: `rgb(${typeColors.employment.dark.join(',')})`, lineWidth: 1, fontColor: '#334155' },
+                                        { text: 'Consulting', fillStyle: `rgba(${typeColors.consulting.base.join(',')}, 0.8)`, strokeStyle: `rgb(${typeColors.consulting.dark.join(',')})`, lineWidth: 1, fontColor: '#334155' }
+                                    ];
+                                }
+                            }
                         },
                         tooltip: {
                             callbacks: {
