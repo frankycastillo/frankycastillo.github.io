@@ -1,0 +1,37 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# Editors / IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# Env and logs
+.env
+.env.*
+!.env.example
+*.log
+
+# Dependencies and local tooling
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+.python-version
