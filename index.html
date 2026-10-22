@@ -23,13 +23,13 @@
             max-width: 1000px;
             margin-left: auto;
             margin-right: auto;
-            height: 350px;
-            max-height: 400px;
+            height: 400px;
+            max-height: 450px;
         }
 
         @media (min-width: 768px) {
             .chart-container {
-                height: 400px;
+                height: 450px;
             }
         }
     </style>
@@ -113,6 +113,18 @@
             </div>
         </section>
 
+        <!-- Selected Projects / Portfolio -->
+        <section id="projects" class="mt-12">
+            <h3 class="text-3xl font-semibold text-slate-900 mb-4">Selected Projects</h3>
+            <p class="text-slate-600 mb-6">Live product platforms designed and built through
+                <a href="https://www.thedevkrewe.com" target="_blank" rel="noopener noreferrer"
+                    class="text-blue-600 hover:underline font-medium">The Dev Krewe</a>
+                for independent insurance agencies and custom print shops.</p>
+            <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Project cards will be dynamically injected here -->
+            </div>
+        </section>
+
     </main>
 
     <footer class="text-center p-8 text-slate-500 text-sm">
@@ -141,7 +153,8 @@
                         { name: "OpenAI", keywords: ['openai'] },
                         { name: "Claude", keywords: ['claude'] },
                         { name: "Bedrock", keywords: ['bedrock'] },
-                        { name: "Agentic Solutions", keywords: ['agentic'] }
+                        { name: "Agentic Solutions", keywords: ['agentic'] },
+                        { name: "AgentCore", keywords: ['agentcore'] }
                     ]
                 },
                 {
@@ -200,23 +213,39 @@
                         "**AI Integration:** Designing and implementing AI-driven solutions to automate business processes and enhance data-driven decision-making.",
                         "**Technical Leadership:** Guiding organizations through complex technology decisions and providing fractional CTO services for high-growth startups."
                     ],
-                    keywords: ['java', 'python', 'ai', 'llm', 'distributed systems', 'cloud', 'architecture', 'consulting', 'digital strategy']
+                    keywords: ['java', 'python', 'ai', 'llm', 'distributed systems', 'cloud', 'architecture', 'consulting', 'digital strategy', 'agentcore']
+                },
+                {
+                    type: "employment",
+                    title: "AWS Practice Architect II, AI/ML",
+                    company: "TEKsystems",
+                    location: "Tampa Bay Area, FL (Remote)",
+                    dates: "April 2026 – Present",
+                    startDate: "2026-04-01",
+                    endDate: new Date().toISOString().split('T')[0],
+                    bullets: [
+                        "**Knowledge Management:** Designing an enterprise knowledge management system to optimize organizational knowledge for the **agentic** era, making content retrieval-ready for LLM-driven workflows.",
+                        "**Agentic Support:** Building AI assistant agents in **Python** on **AWS**, including **Bedrock** and **AgentCore**, to streamline corporate support through agentic support experiences.",
+                        "**Prototypes & POCs:** Building prototypes and proofs of concept that combine agentic capabilities with knowledge optimization for an agentic-first operating model.",
+                        "**AI-Assisted Delivery:** Leveraging AI-assisted coding tools to accelerate architecture, prototyping, and delivery of AI/ML solutions."
+                    ],
+                    keywords: ['python', 'ai', 'llm', 'openai', 'claude', 'bedrock', 'agentic', 'cloud', 'agile', 'aws', 'enterprise solutions', 'agentcore', 'architecture']
                 },
                 {
                     type: "employment",
                     title: "Lead Application Developer (Python, Java, ML)",
                     company: "Raymond James Financial",
                     location: "St. Petersburg, FL (Hybrid)",
-                    dates: "January 2026 – Present",
+                    dates: "January 2026 – April 2026",
                     startDate: "2026-01-01",
-                    endDate: new Date().toISOString().split('T')[0],
+                    endDate: "2026-04-01",
                     bullets: [
                         "**Enterprise AI Ecosystem: Designed and led the development of a firm-wide AI Agentic system using AWS Bedrock and AWS Agent Core to power an internal Agentic AI driven chat",
                         "**Dynamic Agent Store: Engineered a configuration-driven Agent Store using Java Spring Boot and Oracle, enabling polymorphic agent behavior and high scalability with multiple stores including AW S3 and DB.",
                         "**Framework Architecture: Architecting autonomous workflows using Strands in Python, integrating AWS Bedrock Agent Core services for enterprise reliability and security.",
                         "**Hybrid Integration: Orchestrating seamless connectivity between AWS cloud services and on-prem systems, supporting MCP gateways and high-concurrency streaming for internal portals."
                     ],
-                    keywords: ['java', 'spring boot', 'python', 'aws agent core', 'ai', 'llm', 'openai', 'claude', 'bedrock', 'agentic', 'distributed systems', 'datadog', 'kubernetes', 'design patterns', 'cloud', 'agile', 'docker', 'jenkins', 'redis', 'enterprise solutions']
+                    keywords: ['java', 'spring boot', 'python', 'aws agent core', 'ai', 'llm', 'openai', 'claude', 'bedrock', 'agentic', 'distributed systems', 'datadog', 'kubernetes', 'design patterns', 'cloud', 'agile', 'docker', 'jenkins', 'redis', 'enterprise solutions','agentcore']
                 },
                 {
                     type: "employment",
@@ -232,7 +261,7 @@
                         "**Platform Enhancement:** Collaborated with senior developers to enhance the core Slice Insurance Platform, focusing on distributed system patterns, **Kafka messaging**, and cloud observability practices (**Datadog**) within a **Kubernetes** environment.",
                         "Coached team members on best practices, code quality, and design patterns through dedicated code reviews and technical design sessions."
                     ],
-                    keywords: ['java', 'spring boot', 'ai', 'llm', 'openai', 'claude', 'bedrock', 'agentic', 'distributed systems', 'kafka', 'datadog', 'kubernetes', 'design patterns', 'cloud', 'agile', 'docker', 'jenkins', 'redis', 'etl', 'enterprise solutions', 'postgres']
+                    keywords: ['java', 'spring boot', 'ai', 'llm', 'openai', 'claude', 'bedrock', 'agentic', 'distributed systems', 'kafka', 'datadog', 'kubernetes', 'design patterns', 'cloud', 'agile', 'docker', 'jenkins', 'redis', 'etl', 'enterprise solutions', 'postgres', 'aws']
                 },
                 {
                     type: "consulting",
@@ -293,15 +322,62 @@
                     ],
                     keywords: ['java', 'hadoop', 'hbase', 'php', 'jenkins', 'mysql', 'redis', 'etl', 'solid', 'design patterns']
                 }
+            ],
+            projects: [
+                {
+                    name: "Agency Krewe",
+                    url: "https://agencykrewe.com",
+                    productLine: "The Dev Krewe Product",
+                    description: "Insurance agency management platform for independent agencies. Unifies clients, policies, quotes, documents, and secure messaging in one workspace, with dedicated portals for staff and policyholders.",
+                    highlights: [
+                        "Household and policy workspaces covering renewals, coverage, and secure document delivery",
+                        "Role-based access for principals, producers, CSRs, plus a client portal for policyholders",
+                        "Multi-office administration so each agency stays isolated while the book can scale"
+                    ]
+                },
+                {
+                    name: "Print Krewe",
+                    url: "https://printkrewe.com",
+                    productLine: "The Dev Krewe Product",
+                    description: "Operations platform for custom print and apparel shops. Connects a branded touch kiosk, web storefront, live production board, and inventory backoffice—from intake through DTF fulfillment, with English and Spanish built in.",
+                    highlights: [
+                        "Floor-ready kiosk ordering with product customization, cart, and checkout",
+                        "Web storefront and production board for the same-shift mix of kiosk and online jobs",
+                        "Inventory backoffice to keep press-floor work in one system"
+                    ]
+                }
             ]
         };
 
         document.addEventListener('DOMContentLoaded', () => {
             renderSkills();
             renderExperience();
+            renderProjects();
             renderTimelineChart();
             addEventListeners();
         });
+
+        function renderProjects() {
+            const container = document.getElementById('projects-container');
+            container.innerHTML = appData.projects.map(project => {
+                const highlightsHtml = (project.highlights || []).map(item =>
+                    `<li class="mb-2 text-slate-700">${item}</li>`
+                ).join('');
+                const titleHtml = project.url
+                    ? `<a href="${project.url}" target="_blank" rel="noopener noreferrer" class="hover:text-blue-700 hover:underline">${project.name}</a>`
+                    : project.name;
+                return `
+                <div class="bg-white p-6 rounded-lg shadow-md transition-all">
+                    <h4 class="text-2xl font-semibold text-slate-900">${titleHtml}</h4>
+                    <p class="text-lg font-medium text-blue-700 mb-3">${project.productLine}</p>
+                    <p class="text-slate-700 mb-4">${project.description}</p>
+                    <ul class="list-disc list-outside ml-5 space-y-2">
+                        ${highlightsHtml}
+                    </ul>
+                </div>
+                `;
+            }).join('');
+        }
 
         function renderSkills() {
             const container = document.getElementById('skills-container');
